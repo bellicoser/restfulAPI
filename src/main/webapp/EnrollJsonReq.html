@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>   
+    <head>     
+        <meta charset="UTF-8" >
+        <script src="angular.js"></script>
+        <title>Enrollment Payment GateWay</title>  
+        <script type="text/javascript">
+            var app = angular.module("EnrollManagement", []);
+
+            //Controller Part
+            app.controller("EnrollmentController", function ($scope, $http, $location, $window) {
+                $scope.Data = [];
+                $scope.Form = {};
+
+                $scope.submit = function () {
+                    var method = "";
+                    var url = "";
+                    $http({
+                        method: 'POST',
+                        url: 'rest/enrollment',
+                        data: angular.toJson($scope.Form),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(_success, _error);
+                };
+
+                function _success(response) {
+                    window.location.href="/RestfulAPI/rest/enrollment";         
+                }
+
+                function _error(response) {
+                    console.log(response.statusText);
+                }
+            });
+        </script>
+        <style>
+
+            .blue-button{
+                background: #25A6E1;
+                filter: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
+                padding:3px 5px;
+                color:#fff;
+                font-family:'Helvetica Neue',sans-serif;
+                font-size:12px;
+                border-radius:2px;
+                -moz-border-radius:2px;
+                -webkit-border-radius:4px;
+                border:1px solid #1A87B9
+            }     
+
+            .red-button{
+                background: #CD5C5C;
+
+                padding:3px 5px;
+                color:#fff;
+                font-family:'Helvetica Neue',sans-serif;
+                font-size:12px;
+                border-radius:2px;
+                -moz-border-radius:2px;
+                -webkit-border-radius:4px;
+                border:1px solid #CD5C5C
+            }      
+
+            table {
+                font-family: "Helvetica Neue", Helvetica, sans-serif;
+                width: 50%;
+            }
+
+            caption {
+                text-align: left;
+                color: silver;
+                font-weight: bold;
+                text-transform: uppercase;
+                padding: 5px;
+            }
+
+            th {
+                background: SteelBlue;
+                color: white;
+            }
+
+
+            tbody tr:nth-child(even) {
+                background: WhiteSmoke;
+            }
+
+            tbody tr td:nth-child(2) {
+                text-align:center;
+            }
+
+            tbody tr td:nth-child(3),
+            tbody tr td:nth-child(4) {
+                text-align: center;
+                font-family: monospace;
+            }
+
+            tfoot {
+                background: SeaGreen;
+                color: white;
+                text-align: right;
+            }
+
+            tfoot tr th:last-child {
+                font-family: monospace;
+            }
+
+            td,th{
+                border: 1px solid gray;
+                width: 25%;
+                text-align: left;
+                padding: 5px 10px;
+            }
+
+
+
+        </style>
+
+    <body ng-app="EnrollManagement" ng-controller="EnrollmentController">
+        <h1>
+            Enrollment Payment GateWay Json Request
+        </h1> 
+        <form ng-submit="submit();" >
+            <table>
+
+                <tr>
+                    <th colspan="2">Restful Web Service</th>
+                </tr>
+                <tr>
+                    <td>MerchantID</td>
+                    <td ><input type="text" size="20%" ng-model="Form.merchantId"/> </td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td><input type="text"  ng-model="Form.password"/> </td>
+                </tr>
+                <tr>
+                    <td>Card_number</td>
+                    <td><input type="text"  ng-model="Form.cardNumber"/> </td>
+                </tr>
+                <tr>
+                    <td>Card_exp</td>
+                    <td><input type="text"  ng-model="Form.cardExp"/> </td>
+                </tr>
+                <tr>
+                    <td>Card_security_code</td>
+                    <td><input type="text"  ng-model="Form.cardSecurityCode"/> </td>
+                </tr>
+                <tr>
+                    <td>Useragent</td>
+                    <td><input type="text"  ng-model="Form.userAgent"/> </td>
+                </tr>
+                <tr>
+                    <td>TermURL</td>
+                    <td><input type="text"  ng-model="Form.termURL"/> </td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td><input type="text"  ng-model="Form.amount"/> </td>
+                </tr>
+                <tr>
+                    <td>Currency</td>
+                    <td><input type="text"  ng-model="Form.currency"/> </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Submit" class="blue-button" /></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
